@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Car News | WheelWise</title>
+
+    <meta name="description"
+        content="Explore the latest car launches, automotive news, reviews and technology updates on WheelWise.">
+
+    <!-- Existing homepage stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Styles specifically for the news page -->
+    <link rel="stylesheet" href="news.css">
+
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header news-header">
+
+        <div class="container navbar">
+
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-car-side"></i>
+
+                <div class="logo-text">
+                    <strong>WheelWise</strong>
+                    <span>Drive Smarter</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#cars">Cars</a>
+                <a href="news.html" class="active">News</a>
+                <a href="index.html#reviews">Reviews</a>
+                <a href="index.html#compare">Compare</a>
+                <a href="admin/login.html">Admin</a>
+            </nav>
+
+            <div class="nav-actions">
+
+                <div class="nav-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="newsSearch"
+                        placeholder="Search news...">
+                </div>
+
+                <button class="icon-button" id="newsThemeButton"
+                    aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <button class="icon-button menu-button"
+                    id="newsMenuButton"
+                    aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="mobile-menu" id="newsMobileMenu">
+            <a href="index.html">Home</a>
+            <a href="index.html#cars">Cars</a>
+            <a href="news.html">News</a>
+            <a href="index.html#reviews">Reviews</a>
+            <a href="index.html#compare">Compare</a>
+                <a href="admin/login.html">Admin</a>
+        </div>
+
+    </header>
+
+
+    <!-- ================= PAGE HERO ================= -->
+
+    <section class="news-hero">
+
+        <div class="container news-hero-content">
+
+            <span class="eyebrow">LATEST UPDATES</span>
+
+            <h1>All Car News</h1>
+
+            <p>
+                Stay updated with the latest car launches, reviews,
+                industry trends, and automotive insights from around the world.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MAIN NEWS AREA ================= -->
+
+    <main class="news-page">
+
+        <div class="container news-layout">
+
+            <!-- LEFT: ARTICLE LIST -->
+
+            <section class="news-main">
+
+                <div class="news-toolbar">
+
+                    <p id="articleCount">Showing all articles</p>
+
+                    <select id="sortNews" aria-label="Sort articles">
+                        <option value="newest">Latest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="az">Title A–Z</option>
+                    </select>
+
+                </div>
+
+
+                <!-- Article cards are created by JavaScript -->
+                <div class="all-news-grid" id="allNewsGrid"></div>
+
+
+                <!-- Shown when search finds no articles -->
+                <div class="no-news" id="noNews" hidden>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <h2>No articles found</h2>
+                    <p>Try another search term or choose a different category.</p>
+                </div>
+
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination"></div>
+
+            </section>
+
+
+            <!-- RIGHT: SIDEBAR -->
+
+            <aside class="news-sidebar">
+
+
+                <!-- Categories -->
+
+                <section class="sidebar-box">
+
+                    <h2>
+                        <i class="fa-solid fa-layer-group"></i>
+                        Categories
+                    </h2>
+
+                    <div class="category-list" id="categoryList"></div>
+
+                </section>
+
+
+                <!-- Popular articles -->
+
+                <section class="sidebar-box">
+
+                    <h2>
+                        <i class="fa-solid fa-fire"></i>
+                        Popular Articles
+                    </h2>
+
+                    <div id="popularArticles"></div>
+
+                </section>
+
+
+                <!-- Newsletter -->
+
+                <section class="newsletter-box">
+
+                    <h2>
+                        <i class="fa-regular fa-paper-plane"></i>
+                        Stay Updated
+                    </h2>
+
+                    <p>
+                        Get the latest car news, reviews and launches
+                        directly in your inbox.
+                    </p>
+
+                    <form id="newsletterForm">
+
+                        <input
+                            type="email"
+                            id="newsletterEmail"
+                            placeholder="Enter your email address"
+                            required>
+
+                        <button type="submit">Subscribe</button>
+
+                    </form>
+
+                    <p id="newsletterMessage" class="newsletter-message"></p>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="news-footer">
+
+        <div class="container footer-content">
+
+            <a href="index.html" class="footer-logo">
+                <i class="fa-solid fa-car-side"></i>
+
+                <span>
+                    <strong>WheelWise</strong>
+                    <small>Drive Smarter</small>
+                </span>
+            </a>
+
+            <nav class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#cars">Cars</a>
+                <a href="news.html">News</a>
+                <a href="index.html#reviews">Reviews</a>
+                <a href="index.html#compare">Compare</a>
+                <a href="admin/login.html">Admin</a>
+            </nav>
+
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 WheelWise. Drive Smarter.
+        </div>
+
+    </footer>
+
+
+    <!-- ================= ARTICLE DATA ================= -->
+
+  <!-- ================= ARTICLE DATA ================= -->
+
+    <script src="api-config.js"></script>
+    <script src="api.js"></script>
+    <script src="news.js"></script>
+<!-- Admin sign-in is password protected by Supabase Auth. -->
+</body>
+</html>

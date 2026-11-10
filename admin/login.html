@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Login | WheelWise</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="auth-page">
+<main class="auth-card">
+    <a class="auth-brand" href="../index.html">🚘 <span>WheelWise</span></a>
+    <p class="eyebrow">SECURE ADMIN AREA</p>
+    <h1>Welcome back</h1>
+    <p class="muted">Sign in with your authorized WheelWise admin account.</p>
+    <form id="loginForm">
+        <label for="email">Email address</label>
+        <input id="email" type="email" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button class="primary-btn" id="loginButton" type="submit">Sign in</button>
+        <p id="loginMessage" class="form-message" role="status"></p>
+    </form>
+    <p class="auth-foot">Access is restricted to accounts added to the WheelWise admin allow-list.</p>
+    <a class="back-home" href="../index.html">← Back to website</a>
+</main>
+<script src="../api-config.js"></script><script src="../api.js"></script><script src="login.js"></script>
+</body></html>

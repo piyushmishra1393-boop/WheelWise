@@ -1,0 +1,4 @@
+/* Small editor-specific refinements */
+.content-editor:focus{border-color:#4778ed;box-shadow:0 0 0 3px #4778ed12}
+.content-editor blockquote{border-left:3px solid #4778ed;margin:18px 0;padding:8px 16px;color:#60708a;background:#f7f9fd}
+.content-editor ul,.content-editor ol{padding-left:25px;margin:12px 0}

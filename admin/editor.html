@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Article Editor | WheelWise</title><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="editor.css">
+</head>
+<body class="admin-page">
+<div class="editor-shell">
+<header class="editor-topbar"><a class="admin-brand dark-brand" href="dashboard.html">← <span><b>WheelWise Studio</b><small>Article editor</small></span></a>
+<div class="editor-top-actions"><span id="saveStatus" role="status">Unsaved changes</span><button class="outline-btn" id="saveDraftButton" type="button">Save draft</button><button class="primary-btn" id="publishButton" type="button">Publish article</button></div></header>
+<main class="editor-main">
+<div class="editor-heading"><div><p class="eyebrow">CONTENT STUDIO</p><h1 id="editorHeading">Create an article</h1><p>Write, add images and publish your next automotive story.</p></div><a href="dashboard.html" class="back-dashboard">← Dashboard</a></div>
+<form id="articleForm">
+<section class="editor-panel">
+<label for="articleTitle">Article title *</label><input id="articleTitle" class="title-input" maxlength="180" placeholder="Enter a clear, engaging headline" required>
+<div class="form-grid">
+<div><label for="articleCategory">Category *</label><select id="articleCategory" required><option>New Launches</option><option>Car Reviews</option><option>Comparison</option><option>Future Cars</option><option>Launch Updates</option><option>Technology</option><option>Car Guides</option><option>Industry News</option></select></div>
+<div><label for="articleDate">Publish date *</label><input id="articleDate" type="date" required></div>
+<div><label for="readTime">Read time</label><select id="readTime"><option>3 min read</option><option>4 min read</option><option>5 min read</option><option>6 min read</option><option>7 min read</option><option>8 min read</option><option>10 min read</option><option>12 min read</option></select></div>
+</div>
+<label for="articleDescription">Short description *</label><textarea id="articleDescription" rows="3" maxlength="350" placeholder="A short summary shown on article cards and search results." required></textarea>
+</section>
+<section class="editor-panel">
+<div class="section-title"><div><h2>Featured image</h2><p>Upload a JPG, PNG, WEBP or GIF image (maximum 5 MB).</p></div></div>
+<div class="image-upload-row"><div class="featured-preview" id="featuredPreview">Image preview</div><div><input id="featuredFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><button type="button" class="outline-btn" id="uploadFeaturedButton">Upload featured image</button><input type="url" id="articleImage" placeholder="Or paste an https:// image URL"><small id="featuredStatus" class="muted"></small></div></div>
+</section>
+<section class="editor-panel">
+<div class="section-title"><div><h2>Article content</h2><p>Use the toolbar to format text. You can also insert images into the article.</p></div></div>
+<div class="editor-toolbar" role="toolbar" aria-label="Text formatting">
+<button type="button" data-command="bold"><b>B</b></button><button type="button" data-command="italic"><i>I</i></button><button type="button" data-command="formatBlock" data-value="H2">H2</button><button type="button" data-command="formatBlock" data-value="P">¶</button><button type="button" data-command="insertUnorderedList">• List</button><button type="button" id="addLinkButton">↗ Link</button><button type="button" id="insertImageButton">▧ Insert image</button><input id="inlineImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+</div>
+<div id="contentEditor" class="content-editor" contenteditable="true" data-placeholder="Start writing your article here…"></div>
+</section>
+<section class="editor-panel publish-panel">
+<label class="checkbox-line"><input id="popularArticle" type="checkbox"> Mark as a popular article</label>
+<p class="muted">Drafts stay private. Published articles become visible on the public WheelWise website.</p>
+<p id="editorMessage" class="form-message" role="status"></p>
+</section>
+</form>
+</main></div>
+<script src="../api-config.js"></script><script src="../api.js"></script><script src="editor.js"></script>
+</body></html>

@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Car News Article | WheelWise</title>
+    <meta name="description"
+          content="Read the latest automotive news and updates on WheelWise.">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="article.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <header class="article-header">
+        <div class="article-container article-nav">
+            <a href="index.html" class="article-logo">
+                <i class="fa-solid fa-car-side"></i>
+                <span>
+                    <strong>WheelWise</strong>
+                    <small>Drive Smarter</small>
+                </span>
+            </a>
+
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="news.html">All News</a>
+                <a href="admin/login.html">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="article-container article-page">
+        <a href="news.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to All News
+        </a>
+
+        <div id="articleLoading" class="article-status">
+            Loading article...
+        </div>
+
+        <div id="articleNotFound" class="article-status" hidden>
+            <h1>Article not found</h1>
+            <p>This article may not exist or the link may be incorrect.</p>
+            <a href="news.html" class="article-button">Browse All News</a>
+        </div>
+
+        <article id="articleContent" hidden>
+            <div class="article-heading">
+                <span id="articleCategory" class="article-category"></span>
+                <h1 id="articleTitle"></h1>
+
+                <div class="article-meta">
+                    <span id="articleDate"></span>
+                    <span id="articleReadTime"></span>
+                </div>
+            </div>
+
+            <img id="articleImage" class="article-hero-image"
+                 src="" alt="">
+
+            <p id="articleDescription" class="article-intro"></p>
+
+            <div id="articleBody" class="article-body"></div>
+
+            <div class="article-end">
+                <p>Keep exploring the automotive world with WheelWise.</p>
+                <a href="news.html" class="article-button">
+                    Explore More News
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="article-footer">
+        © 2026 WheelWise. Drive Smarter.
+    </footer>
+
+    <!-- Load article data first, then the article page logic -->
+    <script src="api-config.js"></script>
+    <script src="api.js"></script>
+    <script src="article.js"></script>
+<!-- Admin sign-in is password protected by Supabase Auth. -->
+</body>
+</html>

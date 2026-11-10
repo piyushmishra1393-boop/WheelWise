@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard | WheelWise</title><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="admin-page">
+<div class="admin-shell">
+<aside class="admin-sidebar">
+    <a class="admin-brand" href="../index.html">🚘 <span><b>WheelWise</b><small>Content Studio</small></span></a>
+    <p class="side-label">WORKSPACE</p>
+    <a class="side-link active" href="dashboard.html">▦ &nbsp; Dashboard</a>
+    <a class="side-link" href="editor.html">✎ &nbsp; Write an article</a>
+    <a class="side-link" href="../index.html" target="_blank" rel="noopener">↗ &nbsp; View website</a>
+    <div class="sidebar-bottom"><span class="admin-avatar">A</span><span><b>Administrator</b><small id="adminEmail">Signed in</small></span></div>
+</aside>
+<main class="admin-main">
+    <header class="admin-topbar"><div><p class="eyebrow">CONTENT MANAGEMENT</p><h1>Dashboard</h1></div><button class="outline-btn" id="logoutButton">Sign out</button></header>
+    <section class="stats-grid">
+        <article class="stat-card"><span>Total articles</span><strong id="totalCount">—</strong></article>
+        <article class="stat-card"><span>Published</span><strong id="publishedCount">—</strong></article>
+        <article class="stat-card"><span>Drafts</span><strong id="draftCount">—</strong></article>
+    </section>
+    <section class="content-panel">
+        <div class="panel-heading"><div><h2>Your articles</h2><p>Manage, edit, publish or remove your content.</p></div><a class="primary-btn" href="editor.html">＋ New article</a></div>
+        <div class="table-tools"><input id="articleSearch" type="search" placeholder="Search articles by title…"><select id="statusFilter"><option value="all">All statuses</option><option value="published">Published</option><option value="draft">Drafts</option></select></div>
+        <div id="dashboardMessage" class="form-message" role="status">Loading your articles…</div>
+        <div class="table-wrap"><table><thead><tr><th>Article</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="articleRows"></tbody></table></div>
+    </section>
+</main></div>
+<script src="../api-config.js"></script><script src="../api.js"></script><script src="dashboard.js"></script>
+</body></html>

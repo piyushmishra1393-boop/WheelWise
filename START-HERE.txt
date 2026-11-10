@@ -1,0 +1,1 @@
+Start with README.txt. Run supabase/setup.sql, create the Auth admin user, add its UUID to wheelwise_admins, then deploy the folder to HTTPS hosting. Do not put secrets or service_role keys in frontend files.

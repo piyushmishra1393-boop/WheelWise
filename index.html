@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =====================================================
+         BASIC PAGE SETTINGS
+         ===================================================== -->
+
+    <meta charset="UTF-8">
+
+    <!-- Makes website responsive on mobile/tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Website title shown in browser tab -->
+    <title>WheelWise - Drive Smarter</title>
+
+    <!-- Short description for search engines -->
+    <meta name="description"
+        content="WheelWise - Latest car news, reviews, launches and automotive insights.">
+
+    <!-- Connect HTML with CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons from Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         HEADER / NAVIGATION BAR
+         ===================================================== -->
+
+    <header class="header">
+
+        <div class="container navbar">
+
+            <!-- WheelWise Logo -->
+            <a href="#" class="logo">
+
+                <!-- Simple car icon -->
+                <i class="fa-solid fa-car-side"></i>
+
+                <div class="logo-text">
+                    <strong>WheelWise</strong>
+                    <span>Drive Smarter</span>
+                </div>
+
+            </a>
+
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-links">
+
+                <a href="#" class="active">Home</a>
+                <a href="#cars">Cars</a>
+                <a href="news.html">News</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#compare">Compare</a>
+
+            </nav>
+
+
+            <!-- Right side of navbar -->
+            <div class="nav-actions">
+
+                <!-- Small search -->
+                <div class="nav-search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Search cars, brands, features..."
+                        id="navSearch">
+
+                </div>
+
+
+                <!-- Dark mode button -->
+                <button class="icon-button" id="themeButton">
+
+                    <i class="fa-solid fa-moon"></i>
+
+                </button>
+
+
+                <!-- Mobile menu button -->
+                <button class="icon-button menu-button" id="menuButton">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Mobile navigation -->
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="#">Home</a>
+            <a href="#cars">Cars</a>
+            <a href="#news">News</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#compare">Compare</a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO SECTION
+         ===================================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="container hero-grid">
+
+
+                <!-- LEFT SIDE OF HERO -->
+                <div class="hero-content">
+
+                    <!-- Small category labels -->
+                    <div class="hero-tags">
+
+                        <span>Latest Car News</span>
+                        <span>•</span>
+                        <span>Reviews</span>
+                        <span>•</span>
+                        <span>Launches</span>
+
+                    </div>
+
+
+                    <!-- Main heading -->
+                    <h1>
+                        Stay Updated with
+                        <br>
+                        the Latest in the
+                        <span>Auto World</span>
+                    </h1>
+
+
+                    <!-- Description -->
+                    <p>
+                        Get the latest car news, in-depth reviews,
+                        detailed comparisons and expert insights —
+                        all in one place. Make the right choice for
+                        your next ride.
+                    </p>
+
+
+                    <!-- Main search box -->
+                    <div class="hero-search">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="heroSearch"
+                            placeholder="Search for cars, brands, features...">
+
+                        <button id="searchButton">
+                            Search
+                        </button>
+
+                    </div>
+
+
+                    <!-- Hero feature items -->
+                    <div class="hero-features">
+
+                        <!-- Feature 1 -->
+                        <div class="hero-feature">
+
+                            <div class="feature-icon">
+                                <i class="fa-solid fa-newspaper"></i>
+                            </div>
+
+                            <div>
+                                <strong>Latest News</strong>
+                                <small>Breaking updates</small>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Feature 2 -->
+                        <div class="hero-feature">
+
+                            <div class="feature-icon">
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+
+                            <div>
+                                <strong>Expert Reviews</strong>
+                                <small>Honest opinions</small>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Feature 3 -->
+                        <div class="hero-feature">
+
+                            <div class="feature-icon">
+                                <i class="fa-solid fa-chart-column"></i>
+                            </div>
+
+                            <div>
+                                <strong>Compare Cars</strong>
+                                <small>Side by side</small>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Feature 4 -->
+                        <div class="hero-feature">
+
+                            <div class="feature-icon">
+                                <i class="fa-solid fa-tag"></i>
+                            </div>
+
+                            <div>
+                                <strong>Car Insights</strong>
+                                <small>Trends & tips</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT SIDE - HERO IMAGE SLIDER -->
+                <div class="hero-image-area">
+
+                    <div class="hero-image-slider" id="heroSlider">
+
+                        <!-- Slide 1 -->
+                        <div class="hero-slide active">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1400&q=85"
+                                alt="Modern car">
+
+                            <div class="hero-image-text">
+                                Better Cars<br>
+                                Bigger Dreams
+                            </div>
+
+                        </div>
+
+
+                        <!-- Slide 2 -->
+                        <div class="hero-slide">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1400&q=85"
+                                alt="Sports car">
+
+                            <div class="hero-image-text">
+                                Drive Your<br>
+                                Dream
+                            </div>
+
+                        </div>
+
+
+                        <!-- Slide 3 -->
+                        <div class="hero-slide">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1400&q=85"
+                                alt="Luxury car">
+
+                            <div class="hero-image-text">
+                                Discover<br>
+                                What's Next
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Slider dots -->
+                    <div class="slider-dots">
+
+                        <button class="dot active" data-slide="0"></button>
+                        <button class="dot" data-slide="1"></button>
+                        <button class="dot" data-slide="2"></button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             LATEST CAR NEWS
+             ===================================================== -->
+
+        <section class="section" id="news">
+
+            <div class="container">
+
+                <!-- Section heading -->
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Latest Car News</h2>
+
+                        <p>
+                            Stay updated with the newest launches,
+                            policy changes and industry trends.
+                        </p>
+                    </div>
+
+<!---------------------- changed #into article.html-------------------------------------
+------------------------------------------------------------------->
+                    <a href="news.html">
+                        View All News
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- News cards -->
+                <div class="news-grid" id="homeNewsGrid">
+                    <p class="home-news-status">Loading latest news...</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             POPULAR BRANDS
+             ===================================================== -->
+
+        <section class="section brands-section" id="cars">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Explore Popular Brands</h2>
+
+                        <p>
+                            Browse the latest news and updates
+                            from top car brands.
+                        </p>
+                    </div>
+
+                    <a href="#">
+                        View All Brands
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- Brand cards -->
+                <div class="brands-grid">
+
+                    <div class="brand-card">
+                        <strong>S</strong>
+                        <span>Maruti Suzuki</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>H</strong>
+                        <span>Hyundai</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>T</strong>
+                        <span>Tata</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>M</strong>
+                        <span>Mahindra</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>H</strong>
+                        <span>Honda</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>TOYOTA</strong>
+                        <span>Toyota</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>BMW</strong>
+                        <span>BMW</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>MB</strong>
+                        <span>Mercedes-Benz</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>AUDI</strong>
+                        <span>Audi</span>
+                    </div>
+
+                    <div class="brand-card">
+                        <strong>KIA</strong>
+                        <span>Kia</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BLUE CTA SECTION
+             ===================================================== -->
+
+        <section class="cta-section">
+
+            <div class="container cta-box">
+
+                <!-- CTA text -->
+                <div class="cta-content">
+
+                    <small>
+                        Your next ride starts with the right information
+                    </small>
+
+                    <h2>
+                        Read. Compare. Decide
+                        <span>with Confidence</span>
+                    </h2>
+
+                    <p>
+                        Whether it's a new launch, a detailed review
+                        or the latest industry update — WheelWise helps
+                        you stay informed and make smarter car decisions.
+                    </p>
+
+                    <a href="#news" class="primary-button">
+                        Explore Latest News
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- Small cards on right -->
+                <div class="cta-cards">
+
+                    <div class="mini-card">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=500&q=80"
+                            alt="SUV">
+
+                        <span>New Launch</span>
+
+                        <p>Next-Gen SUV Hits Indian Roads</p>
+
+                    </div>
+
+
+                    <div class="mini-card">
+
+<!--=========================mannual codes strts from here=============================================================-->
+                        <img
+                            src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=500&q=80"
+
+                                                                            alt="SUV">
+      <span> New Launch </span> 
+
+
+       <p>Next -Gen SUV Hits Indian Road</p>
+</div> 
+
+              <div
+                          class="mini-card">
+     <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=500&q=80"
+
+                                                          alt="Car review"> 
+ 
+<span>Review</span>
+
+<p>Is the New Sedan Worth It? </p>
+
+                                       </div>
+
+               <div 
+ class="mini-card">
+                    <img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=500&q=80"
+
+alt="car comparison">
+                        <span>comparision</span>
+                                                     <p>Diesel vs Petrol vs Hybrid </p>
+
+ 
+   </div>
+          </div>
+                  </div>
+                            </section>
+
+<!--=============================================================================================================================
+====================WHY CHOOSE WHEEL WISE========================================================================================
+========================================-->
+
+<section class="section why-section">
+                                    <div class="container">
+                                                           <div class="section-title-enter">
+ <h2>Why Choose WheelWise? </h2>
+
+              </div>
+                     <div class="why-grid">
+ <!-- WHY ITEM 1 -->
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <div>
+                            <h3>Trusted Information</h3>
+
+                            <p>
+                                Accurate, up-to-date and unbiased content.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- WHY ITEM 2 -->
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+
+                        <div>
+                            <h3>Easy to Read</h3>
+
+                            <p>
+                                Clean design, simple navigation and smooth experience.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- WHY ITEM 3 -->
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div>
+                            <h3>For Every Car Lover</h3>
+
+                            <p>
+                                From first-time buyers to car enthusiasts.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- WHY ITEM 4 -->
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+
+                        <div>
+                            <h3>Built with Passion</h3>
+
+                            <p>
+                                Because we believe every drive matters.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-grid">
+
+
+            <!-- Footer logo -->
+            <div class="footer-about">
+
+                <a href="#" class="logo">
+
+                    <i class="fa-solid fa-car-side"></i>
+
+                    <div class="logo-text">
+                        <strong>WheelWise</strong>
+                        <span>Drive Smarter</span>
+                    </div>
+
+                </a>
+
+                <p>
+                    Your one-stop destination for car information,
+                    reviews and news.
+                </p>
+
+                <small>
+                    © 2025 WheelWise. All rights reserved.
+                </small>
+
+            </div>
+
+
+            <!-- Quick links -->
+            <div class="footer-column">
+
+                <h3>Quick Links</h3>
+
+                <a href="#">Home</a>
+                <a href="#cars">Cars</a>
+                <a href="#news">News</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#compare">Compare</a>
+                <a href="#">About Us</a>
+
+            </div>
+
+
+            <!-- Resources -->
+            <div class="footer-column">
+
+                <h3>Resources</h3>
+
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Sitemap</a>
+                <a href="admin/login.html">Admin Login</a>
+
+            </div>
+
+
+            <!-- Social media -->
+            <div class="footer-column">
+
+                <h3>Follow Us</h3>
+
+                <div class="social-icons">
+
+                    <a href="#">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Newsletter -->
+            <div class="footer-newsletter">
+
+                <h3>Get the latest updates</h3>
+
+                <div class="newsletter">
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email">
+
+                    <button>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bottom footer -->
+        <div class="footer-bottom">
+
+            <span>Drive Smarter</span>
+            <span>•</span>
+            <span>Choose Better</span>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT FILE
+         ===================================================== -->
+
+    <script src="api-config.js"></script>
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+
+<!-- Admin sign-in is password protected by Supabase Auth. -->
+</body>
+
+</html>
