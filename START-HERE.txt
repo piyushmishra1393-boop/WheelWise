@@ -1,1 +1,1 @@
-Start with README.txt. Run supabase/setup.sql, create the Auth admin user, add its UUID to wheelwise_admins, then deploy the folder to HTTPS hosting. Do not put secrets or service_role keys in frontend files.
+Read README-SHOWCASE.txt first. Back up the current website, run supabase/upgrade_existing_database.sql, then deploy the files to your existing WheelWise GitHub repository. Admin login: /admin/login.html.

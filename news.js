@@ -71,7 +71,8 @@ function getFilteredArticles() {
             const searchableText = (
                 safeText(article.title) + " " +
                 safeText(article.category) + " " +
-                safeText(article.description)
+                safeText(article.description) + " " +
+                safeText(article.contentHtml).replace(/<[^>]*>/g, " ")
             ).toLowerCase();
 
             return searchableText.includes(searchTerm);
@@ -350,15 +351,7 @@ function initializeNewsPage() {
         });
     }
 
-    if (newsletterForm) {
-        newsletterForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const message = document.getElementById("newsletterMessage");
-            if (message) {
-                message.textContent = "Demo only: newsletter signup is not connected yet.";
-            }
-        });
-    }
+
 
     const count = document.getElementById("articleCount");
     if (count) count.textContent = "Loading articles...";

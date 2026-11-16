@@ -88,7 +88,7 @@
 
     async function loadArticles() {
         const data = await request(
-            "/rest/v1/articles?select=id,title,date,category,readTime,image,description,contentHtml,popular&status=eq.published&order=date.desc",
+            "/rest/v1/articles?select=*&status=eq.published&order=date.desc",
             { method: "GET", cache: "no-store" }, false
         );
         if (!Array.isArray(data)) throw new Error("Invalid articles response.");
@@ -214,6 +214,54 @@
         return c.url + "/storage/v1/object/public/" + BUCKET + "/" + path;
     }
 
+
+    // Generic allow-listed table access for the expanded admin workspace.
+    const ADMIN_TABLES = ["brands", "videos", "homepage_slides", "newsletter_subscribers", "contact_messages"];
+    async function adminList(table, order) {
+        await requireAdmin();
+        if (!ADMIN_TABLES.includes(table)) throw new Error("Unsupported admin section.");
+        const rows = await request("/rest/v1/" + table + "?select=*&order=" + encodeURIComponent(order || "created_at.desc"), { method: "GET", cache: "no-store" }, true);
+        return Array.isArray(rows) ? rows : [];
+    }
+    async function adminSave(table, record, isNew) {
+        await requireAdmin();
+        if (!ADMIN_TABLES.includes(table)) throw new Error("Unsupported admin section.");
+        const path = "/rest/v1/" + table + (isNew ? "" : "?id=eq." + encodeURIComponent(record.id));
+        const rows = await request(path, { method: isNew ? "POST" : "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify(record) }, true);
+        return Array.isArray(rows) ? rows[0] : rows;
+    }
+    async function adminDelete(table, id) {
+        await requireAdmin();
+        if (!ADMIN_TABLES.includes(table)) throw new Error("Unsupported admin section.");
+        await request("/rest/v1/" + table + "?id=eq." + encodeURIComponent(id), { method: "DELETE" }, true);
+        return true;
+    }
+    async function loadVideos(category) {
+        const filter = category ? "&category=eq." + encodeURIComponent(category) : "";
+        const rows = await request("/rest/v1/videos?select=*&status=eq.published" + filter + "&order=published_at.desc.nullslast,created_at.desc", { method: "GET", cache: "no-store" }, false);
+        return Array.isArray(rows) ? rows : [];
+    }
+    async function loadHomepageSlides() {
+        const rows = await request("/rest/v1/homepage_slides?select=*&status=eq.active&order=display_order.asc,created_at.desc", { method: "GET", cache: "no-store" }, false);
+        return Array.isArray(rows) ? rows : [];
+    }
+    async function loadBrands() {
+        const rows = await request("/rest/v1/brands?select=*&status=eq.active&order=display_order.asc,name.asc", { method: "GET", cache: "no-store" }, false);
+        return Array.isArray(rows) ? rows : [];
+    }
+    async function subscribeNewsletter(email) {
+        const clean = String(email || "").trim().toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) throw new Error("Enter a valid email address.");
+        await request("/rest/v1/newsletter_subscribers?on_conflict=email", { method: "POST", headers: { Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify({ email: clean, status: "active" }) }, false);
+        return true;
+    }
+    async function submitContact(contact) {
+        const payload = { name: String(contact.name || "").trim(), email: String(contact.email || "").trim().toLowerCase(), subject: String(contact.subject || "").trim(), message: String(contact.message || "").trim() };
+        if (!payload.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email) || payload.message.length < 5) throw new Error("Please complete the contact form correctly.");
+        await request("/rest/v1/contact_messages", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify(payload) }, false);
+        return true;
+    }
+
     function safeImageUrl(value) {
         if (!value) return "";
         try {
@@ -225,6 +273,7 @@
     window.WheelWiseAPI = {
         loadArticles, signIn, signOut, checkAdmin, requireAdmin,
         loadAdminArticles, saveArticle, deleteArticle, uploadImage,
-        safeImageUrl, getSession: getValidSession
+        safeImageUrl, getSession: getValidSession,
+        adminList, adminSave, adminDelete, loadVideos, loadBrands, loadHomepageSlides, subscribeNewsletter, submitContact
     };
 })();

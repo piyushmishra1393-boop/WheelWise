@@ -92,69 +92,72 @@ if (themeButton) {
    4. HERO IMAGE SLIDER
    ========================================================= */
 
-const slides = document.querySelectorAll(".hero-slide");
-const dots = document.querySelectorAll(".dot");
-
+let slides = Array.from(document.querySelectorAll(".hero-slide"));
+let dots = Array.from(document.querySelectorAll(".dot"));
 let currentSlide = 0;
+let sliderTimer = null;
 
 function showSlide(number) {
-
-    // Stop if no slides exist
-
-    if (slides.length === 0) {
-        return;
-    }
-
-    // Keep slide number within available range
-
+    if (!slides.length) return;
     currentSlide = number % slides.length;
-
-    slides.forEach(function (slide) {
-
-        slide.classList.remove("active");
-
-    });
-
-    dots.forEach(function (dot) {
-
-        dot.classList.remove("active");
-
-    });
-
+    slides.forEach(slide => slide.classList.remove("active"));
+    dots.forEach(dot => dot.classList.remove("active"));
     slides[currentSlide].classList.add("active");
-
-    if (dots[currentSlide]) {
-
-        dots[currentSlide].classList.add("active");
-
-    }
-
+    if (dots[currentSlide]) dots[currentSlide].classList.add("active");
 }
 
+function connectSliderControls() {
+    slides = Array.from(document.querySelectorAll(".hero-slide"));
+    dots = Array.from(document.querySelectorAll(".dot"));
+    dots.forEach((dot, index) => dot.addEventListener("click", () => showSlide(index)));
+    if (sliderTimer) clearInterval(sliderTimer);
+    if (slides.length > 1) sliderTimer = setInterval(() => showSlide(currentSlide + 1), 5000);
+}
 
-// Dot click events
+connectSliderControls();
 
-dots.forEach(function (dot, index) {
-
-    dot.addEventListener("click", function () {
-
-        showSlide(index);
-
-    });
-
-});
-
-
-// Automatic slider
-
-if (slides.length > 1) {
-
-    setInterval(function () {
-
-        showSlide(currentSlide + 1);
-
-    }, 5000);
-
+// If admin-managed slides exist, use them. Otherwise keep the built-in showcase slides.
+if (window.WheelWiseAPI && typeof WheelWiseAPI.loadHomepageSlides === "function") {
+    WheelWiseAPI.loadHomepageSlides().then(function (items) {
+        if (!items.length) return;
+        const slider = document.getElementById("heroSlider");
+        const dotWrap = document.querySelector(".slider-dots");
+        if (!slider || !dotWrap) return;
+        slider.replaceChildren();
+        dotWrap.replaceChildren();
+        items.forEach(function (item, index) {
+            const slide = document.createElement("div");
+            slide.className = "hero-slide" + (index === 0 ? " active" : "");
+            const img = document.createElement("img");
+            img.src = WheelWiseAPI.safeImageUrl(item.image_url);
+            img.alt = item.title || (item.vehicle_type === "bike" ? "Motorcycle" : "Car");
+            img.loading = index === 0 ? "eager" : "lazy";
+            const caption = document.createElement("div");
+            caption.className = "hero-image-text";
+            caption.textContent = item.title || (item.vehicle_type === "bike" ? "Explore Two Wheels" : "Explore the Road");
+            slide.append(img, caption);
+            if (item.link_url) {
+                try {
+                    const url = new URL(item.link_url, window.location.href);
+                    if (url.protocol === "https:" || url.protocol === "http:") {
+                        const link = document.createElement("a");
+                        link.href = url.href;
+                        link.target = "_blank";
+                        link.rel = "noopener noreferrer";
+                        link.append(slide);
+                        slider.append(link);
+                    } else slider.append(slide);
+                } catch (_) { slider.append(slide); }
+            } else slider.append(slide);
+            const dot = document.createElement("button");
+            dot.className = "dot" + (index === 0 ? " active" : "");
+            dot.type = "button";
+            dot.setAttribute("aria-label", "Show slide " + (index + 1));
+            dotWrap.append(dot);
+        });
+        currentSlide = 0;
+        connectSliderControls();
+    }).catch(function (error) { console.warn("WheelWise slider fallback:", error.message); });
 }
 
 
@@ -177,7 +180,7 @@ function searchWheelWise(searchText) {
     }
 
     window.location.href =
-        "news.html?search=" + encodeURIComponent(query);
+        "search.html?q=" + encodeURIComponent(query);
 
 }
 
@@ -225,58 +228,6 @@ if (navSearch) {
     });
 
 }
-
-
-/* =========================================================
-   7. NEWSLETTER
-   ========================================================= */
-
-// This is currently a demonstration only.
-// Actual email storage will be implemented separately.
-
-const newsletterButton =
-    document.querySelector(".newsletter button");
-
-const newsletterInput =
-    document.querySelector(".newsletter input");
-
-
-if (newsletterButton && newsletterInput) {
-
-    newsletterButton.addEventListener("click", function () {
-
-        const email = newsletterInput.value.trim();
-
-        if (email === "") {
-
-            alert("Please enter your email address.");
-
-            return;
-
-        }
-
-        // Basic email format validation
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailPattern.test(email)) {
-
-            alert("Please enter a valid email address.");
-
-            return;
-
-        }
-
-        alert("Thank you! Newsletter integration is coming soon.");
-
-        newsletterInput.value = "";
-
-    });
-
-}
-
-
-
 
 
 /* =========================================================

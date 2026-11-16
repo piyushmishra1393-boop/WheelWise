@@ -32,6 +32,7 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<link rel="stylesheet" href="library.css">
 </head>
 
 
@@ -63,10 +64,10 @@
             <nav class="nav-links">
 
                 <a href="#" class="active">Home</a>
-                <a href="#cars">Cars</a>
+                <a href="brands.html">Cars</a>
                 <a href="news.html">News</a>
-                <a href="#reviews">Reviews</a>
-                <a href="#compare">Compare</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="compare.html">Compare</a>
 
             </nav>
 
@@ -111,10 +112,10 @@
         <div class="mobile-menu" id="mobileMenu">
 
             <a href="#">Home</a>
-            <a href="#cars">Cars</a>
+            <a href="brands.html">Cars</a>
             <a href="#news">News</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#compare">Compare</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="compare.html">Compare</a>
 
         </div>
 
@@ -634,6 +635,9 @@ alt="car comparison">
          FOOTER
          ===================================================== -->
 
+
+<section class="section" id="exploreBrands"><div class="container"><div class="section-heading"><p class="eyebrow">EXPLORE THE AUTOMOTIVE WORLD</p><h2>Explore Popular Brands</h2><p>Browse manufacturers and discover their latest stories.</p></div><div id="brandGrid" class="brand-grid"><p>Brands will appear here after the database upgrade.</p></div><p style="text-align:center;margin-top:24px"><a class="primary-button" href="brands.html">View All Brands →</a></p></div></section>
+
     <footer class="footer">
 
         <div class="container footer-grid">
@@ -671,10 +675,10 @@ alt="car comparison">
                 <h3>Quick Links</h3>
 
                 <a href="#">Home</a>
-                <a href="#cars">Cars</a>
+                <a href="brands.html">Cars</a>
                 <a href="#news">News</a>
-                <a href="#reviews">Reviews</a>
-                <a href="#compare">Compare</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="compare.html">Compare</a>
                 <a href="#">About Us</a>
 
             </div>
@@ -727,24 +731,20 @@ alt="car comparison">
 
                 <h3>Get the latest updates</h3>
 
-                <div class="newsletter">
-
-                    <input
-                        type="email"
-                        placeholder="Enter your email">
-
-                    <button>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-
-                </div>
+                <form class="newsletter" id="homeNewsletterForm">
+                    <input id="homeNewsletterEmail" type="email" placeholder="Enter your email" required>
+                    <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <p id="homeNewsletterMessage" aria-live="polite"></p>
 
             </div>
 
         </div>
 
 
-        <!-- Bottom footer -->
+        <div class="footer-legal-links" style="text-align:center;padding:12px 10px;font-size:13px"><a href="about.html">About Us</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></div>
+
+                <!-- Bottom footer -->
         <div class="footer-bottom">
 
             <span>Drive Smarter</span>
@@ -764,6 +764,8 @@ alt="car comparison">
     <script src="api-config.js"></script>
     <script src="api.js"></script>
     <script src="script.js"></script>
+    <script src="library.js"></script>
+    <script>document.getElementById("homeNewsletterForm")?.addEventListener("submit",async function(e){e.preventDefault();const m=document.getElementById("homeNewsletterMessage");try{await WheelWiseAPI.subscribeNewsletter(document.getElementById("homeNewsletterEmail").value);m.textContent="Thanks for subscribing!";this.reset();}catch(err){m.textContent=err.message;}});</script>
 
 <!-- Admin sign-in is password protected by Supabase Auth. -->
 </body>
