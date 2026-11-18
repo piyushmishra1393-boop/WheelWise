@@ -1,32 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard | WheelWise</title><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="dashboard.css">
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard | WheelWise</title><link rel="stylesheet" href="admin.css">    <link rel="stylesheet" href="../theme.css">
 </head>
-<body class="admin-page">
-<div class="admin-shell">
-<aside class="admin-sidebar">
-    <a class="admin-brand" href="../index.html">🚘 <span><b>WheelWise</b><small>Content Studio</small></span></a>
-    <p class="side-label">WORKSPACE</p>
-    <a class="side-link active" href="dashboard.html">▦ &nbsp; Dashboard</a>
-    <a class="side-link" href="editor.html">✎ &nbsp; Write an article</a>
-    <a class="side-link" href="../index.html" target="_blank" rel="noopener">↗ &nbsp; View website</a>
-    <div class="sidebar-bottom"><span class="admin-avatar">A</span><span><b>Administrator</b><small id="adminEmail">Signed in</small></span></div>
-</aside>
-<main class="admin-main">
-    <header class="admin-topbar"><div><p class="eyebrow">CONTENT MANAGEMENT</p><h1>Dashboard</h1></div><button class="outline-btn" id="logoutButton">Sign out</button></header>
-    <section class="stats-grid">
-        <article class="stat-card"><span>Total articles</span><strong id="totalCount">—</strong></article>
-        <article class="stat-card"><span>Published</span><strong id="publishedCount">—</strong></article>
-        <article class="stat-card"><span>Drafts</span><strong id="draftCount">—</strong></article>
-    </section>
-    <section class="content-panel">
-        <div class="panel-heading"><div><h2>Your articles</h2><p>Manage, edit, publish or remove your content.</p></div><a class="primary-btn" href="editor.html">＋ New article</a></div>
-        <div class="table-tools"><input id="articleSearch" type="search" placeholder="Search articles by title…"><select id="statusFilter"><option value="all">All statuses</option><option value="published">Published</option><option value="draft">Drafts</option></select></div>
-        <div id="dashboardMessage" class="form-message" role="status">Loading your articles…</div>
-        <div class="table-wrap"><table><thead><tr><th>Article</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="articleRows"></tbody></table></div>
-    </section>
-</main></div>
-<script src="../api-config.js"></script><script src="../api.js"></script><script src="dashboard.js"></script>
+<body class="dashboard-page"><div class="admin-shell"><aside class="sidebar"><a class="brand" href="../index.html"><span class="brand-mark">W</span><span><b>WheelWise</b><small>Admin Studio</small></span></a><p class="eyebrow">WORKSPACE</p><nav id="sideNav"><button class="nav active" data-section="overview">Overview</button><button class="nav" data-section="articles">Articles</button><a class="nav" href="editor.html">Full Article Editor ↗</a><button class="nav" data-section="brands">Brands</button><button class="nav" data-section="videos">YouTube Videos</button><button class="nav" data-section="slides">Homepage Slider</button><button class="nav" data-section="newsletter">Newsletter</button><button class="nav" data-section="messages">Contact Messages</button></nav><div class="side-bottom"><span id="adminEmail">Signed in</span><button id="logoutButton" class="logout">Sign out</button></div></aside>
+<main class="main"><header class="topbar"><div><span class="eyebrow">WHEELWISE CONTENT MANAGEMENT</span><h1 id="pageTitle">Overview</h1></div><a class="view-site" href="../index.html" target="_blank" rel="noopener">View website ↗</a></header><div id="notice" class="notice" role="status"></div>
+<section id="overviewSection" class="section"><div class="stats" id="statsGrid"><article class="stat"><small>Published articles</small><strong>—</strong></article><article class="stat"><small>Drafts</small><strong>—</strong></article><article class="stat"><small>Brands</small><strong>—</strong></article><article class="stat"><small>Videos</small><strong>—</strong></article></div><article class="panel"><h2>Quick start</h2><p>Use the sections on the left to publish articles, maintain brand pages, add YouTube videos and manage homepage slides.</p><p class="muted">All write actions are checked by Supabase Auth and your WheelWise admin allow-list. Visitors cannot open this dashboard without an authorized login.</p></article></section>
+<section id="articlesSection" class="section" hidden><div class="section-head"><p>Manage saved drafts and published stories.</p><div class="section-actions"><button class="primary" id="newArticle">＋ Quick article</button><a class="secondary" href="editor.html">Open full editor ↗</a></div></div><div id="articleEditor" class="panel editor" hidden><h2 id="articleFormTitle">New article</h2><form id="articleForm" class="form-grid"><input type="hidden" id="articleId"><label>Title<input id="aTitle" required></label><label>Category<input id="aCategory" placeholder="New Launches" required></label><label>Brand name (optional)<input id="aBrand" placeholder="Tata, BMW, etc."></label><label>Date<input id="aDate" type="date" required></label><label>Read time<input id="aReadTime" placeholder="5 min read"></label><label class="wide">Featured image URL<input id="aImage" type="url" placeholder="https://..."></label><div class="wide upload-row"><input id="aImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><button class="secondary" type="button" id="uploadFeaturedImage">Upload image</button><small>JPG, PNG, WEBP or GIF · max 5 MB</small></div><label class="wide">Short description<textarea id="aDescription" rows="2" required></textarea></label><label class="wide">Article content (HTML allowed for headings, paragraphs and lists)<textarea id="aContent" rows="10" required></textarea></label><label>Status<select id="aStatus"><option value="draft">Draft</option><option value="published">Published</option></select></label><label class="check-label"><input id="aPopular" type="checkbox"> Mark as popular</label><div class="wide form-actions"><button class="primary" type="submit">Save article</button><button class="secondary" type="button" id="cancelArticle">Cancel</button></div></form></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="articlesRows"></tbody></table></div></div></section>
+<section id="brandsSection" class="section" hidden><div class="section-head"><p>Add or update manufacturers shown in Explore Brands.</p><button class="primary" id="addBrand">＋ Add brand</button></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Brand</th><th>Slug</th><th>Status</th><th>Actions</th></tr></thead><tbody id="brandsRows"></tbody></table></div></div></section>
+<section id="videosSection" class="section" hidden><div class="section-head"><p>Add YouTube links manually. Paste a YouTube watch or youtu.be URL.</p><button class="primary" id="addVideo">＋ Add video</button></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Video</th><th>Category</th><th>Brand</th><th>Status</th><th>Actions</th></tr></thead><tbody id="videosRows"></tbody></table></div></div></section>
+<section id="slidesSection" class="section" hidden><div class="section-head"><p>Manage the home page image carousel (cars and bikes).</p><button class="primary" id="addSlide">＋ Add slide</button></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Slide</th><th>Vehicle type</th><th>Status</th><th>Actions</th></tr></thead><tbody id="slidesRows"></tbody></table></div></div></section>
+<section id="newsletterSection" class="section" hidden><div class="panel"><div class="section-head"><h2>Newsletter subscribers</h2><button class="secondary" id="exportNewsletter">Export CSV</button></div><p class="muted">Subscriber records are stored securely. Automatic email campaigns require a server-side email provider and are not activated by this front-end package.</p><div class="table-wrap"><table><thead><tr><th>Email</th><th>Status</th><th>Subscribed</th></tr></thead><tbody id="newsletterRows"></tbody></table></div></div></section>
+<section id="messagesSection" class="section" hidden><div class="panel"><h2>Contact messages</h2><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th></tr></thead><tbody id="messagesRows"></tbody></table></div></div></section>
+<footer class="admin-footer">WheelWise Admin Studio · Supabase authenticated workspace</footer></main></div>
+<script src="../api-config.js"></script><script src="../api.js"></script><script src="dashboard.js"></script>    <script src="../theme.js"></script>
 </body></html>

@@ -1,31 +1,15 @@
 "use strict";
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-const loginButton = document.getElementById("loginButton");
-
-(async function redirectIfAlreadyLoggedIn() {
-    try {
-        if (await WheelWiseAPI.checkAdmin()) location.replace("dashboard.html");
-    } catch (_) { /* Not signed in yet. */ }
+const form = document.getElementById("loginForm");
+const message = document.getElementById("loginMessage");
+const button = document.getElementById("loginButton");
+(async function () {
+  try { if (await WheelWiseAPI.checkAdmin()) location.replace("dashboard.html"); } catch (_) {}
 })();
-
-loginForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    loginButton.disabled = true;
-    loginButton.textContent = "Signing in…";
-    loginMessage.textContent = "";
-    loginMessage.className = "form-message";
-    try {
-        await WheelWiseAPI.signIn(
-            document.getElementById("email").value,
-            document.getElementById("password").value
-        );
-        location.replace("dashboard.html");
-    } catch (error) {
-        loginMessage.textContent = error.message;
-        loginMessage.classList.add("error");
-    } finally {
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign in";
-    }
+form.addEventListener("submit", async function (event) {
+  event.preventDefault(); message.textContent = "Checking your account…"; message.className = "message"; button.disabled = true;
+  try {
+    await WheelWiseAPI.signIn(document.getElementById("email").value, document.getElementById("password").value);
+    location.replace("dashboard.html");
+  } catch (error) { message.textContent = error.message || "Login failed."; message.className = "message error"; }
+  finally { button.disabled = false; }
 });

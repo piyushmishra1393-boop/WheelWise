@@ -1,77 +1,38 @@
 "use strict";
-let allArticles = [];
-const rows = document.getElementById("articleRows");
-const message = document.getElementById("dashboardMessage");
-
-function esc(value) {
-    return String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[ch]));
-}
-function renderDashboard() {
-    const query = document.getElementById("articleSearch").value.trim().toLowerCase();
-    const status = document.getElementById("statusFilter").value;
-    const filtered = allArticles.filter(article =>
-        (!query || String(article.title || "").toLowerCase().includes(query)) &&
-        (status === "all" || article.status === status)
-    );
-    document.getElementById("totalCount").textContent = allArticles.length;
-    document.getElementById("publishedCount").textContent = allArticles.filter(a => a.status === "published").length;
-    document.getElementById("draftCount").textContent = allArticles.filter(a => a.status === "draft").length;
-    rows.replaceChildren();
-    if (!filtered.length) {
-        rows.innerHTML = '<tr><td colspan="4" class="empty-cell">No articles match this view. Create your first article.</td></tr>';
-        return;
-    }
-    filtered.forEach(article => {
-        const tr = document.createElement("tr");
-        const date = article.date ? new Date(article.date + "T12:00:00").toLocaleDateString("en-IN") : "—";
-        tr.innerHTML = `
-          <td><div class="article-cell">${article.image ? `<img src="${esc(WheelWiseAPI.safeImageUrl(article.image))}" alt="">` : '<span class="thumb-placeholder">🚘</span>'}
-          <span><b>${esc(article.title || "Untitled")}</b><small>${esc(article.category || "Uncategorised")}</small></span></div></td>
-          <td>${esc(date)}</td><td><span class="status-pill ${article.status === "published" ? "is-published" : "is-draft"}">${esc(article.status || "draft")}</span></td>
-          <td><div class="row-actions"><a class="small-btn" href="editor.html?id=${encodeURIComponent(article.id)}">Edit</a>
-          <button class="small-btn" data-action="toggle" data-id="${esc(article.id)}">${article.status === "published" ? "Unpublish" : "Publish"}</button>
-          <button class="small-btn danger-btn" data-action="delete" data-id="${esc(article.id)}">Delete</button></div></td>`;
-        rows.appendChild(tr);
-    });
-}
-async function loadDashboard() {
-    try {
-        const user = await WheelWiseAPI.requireAdmin();
-        document.getElementById("adminEmail").textContent = user.email || "Admin";
-        allArticles = await WheelWiseAPI.loadAdminArticles();
-        message.textContent = allArticles.length ? "" : "No articles yet. Select “New article” to start writing.";
-        renderDashboard();
-    } catch (error) {
-        if (/login|session|authorized/i.test(error.message)) location.replace("login.html");
-        else message.textContent = error.message;
-    }
-}
-document.getElementById("articleSearch").addEventListener("input", renderDashboard);
-document.getElementById("statusFilter").addEventListener("change", renderDashboard);
-rows.addEventListener("click", async event => {
-    const button = event.target.closest("button[data-action]");
-    if (!button) return;
-    const article = allArticles.find(item => item.id === button.dataset.id);
-    if (!article) return;
-    if (button.dataset.action === "delete") {
-        if (!confirm("Delete “" + article.title + "”? This cannot be undone.")) return;
-        button.disabled = true;
-        try { await WheelWiseAPI.deleteArticle(article.id); await loadDashboard(); }
-        catch (error) { alert(error.message); button.disabled = false; }
-    } else {
-        button.disabled = true;
-        try {
-            await WheelWiseAPI.saveArticle(Object.assign({}, article, {
-                status: article.status === "published" ? "draft" : "published"
-            }), false);
-            await loadDashboard();
-        } catch (error) { alert(error.message); button.disabled = false; }
-    }
-});
-document.getElementById("logoutButton").addEventListener("click", async () => {
-    await WheelWiseAPI.signOut();
-    location.replace("login.html");
-});
-loadDashboard();
+const $ = id => document.getElementById(id);
+const notice = $("notice");
+let currentArticles = [], currentBrands = [], currentVideos = [], currentSlides = [], currentSubscribers = [];
+function say(message, error=false) { notice.textContent=message; notice.className="notice show"+(error?" error":""); }
+function cell(text) { const td=document.createElement("td"); td.textContent=text == null ? "" : String(text); return td; }
+function actionButton(label, handler, danger=false) { const b=document.createElement("button"); b.className=danger?"tiny danger":"tiny"; b.textContent=label; b.type="button"; b.addEventListener("click",handler); return b; }
+function rowAction(td,label,fn,danger=false){td.appendChild(actionButton(label,fn,danger));}
+async function guard(){ try { const user=await WheelWiseAPI.requireAdmin(); $("adminEmail").textContent=user.email||"Authorized admin"; } catch(e){ location.replace("login.html"); throw e; } }
+function switchSection(name){ document.querySelectorAll(".section").forEach(x=>x.hidden=true); $(name+"Section").hidden=false; document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.section===name)); $("pageTitle").textContent=name.charAt(0).toUpperCase()+name.slice(1).replace("videos","YouTube Videos").replace("slides","Homepage Slider"); loadSection(name).catch(e=>say(e.message,true)); }
+async function loadSection(name){ if(name==="overview"){ const [a,b,v]=await Promise.all([WheelWiseAPI.loadAdminArticles(),WheelWiseAPI.adminList("brands","name.asc"),WheelWiseAPI.adminList("videos","created_at.desc")]); currentArticles=a; currentBrands=b; currentVideos=v; const pub=a.filter(x=>x.status==="published").length; $("statsGrid").innerHTML=`<article class="stat"><small>Total articles</small><strong>${a.length}</strong></article><article class="stat"><small>Published</small><strong>${pub}</strong></article><article class="stat"><small>Brands</small><strong>${b.length}</strong></article><article class="stat"><small>YouTube videos</small><strong>${v.length}</strong></article>`; }
+if(name==="articles"){currentArticles=await WheelWiseAPI.loadAdminArticles(); renderArticles();}
+if(name==="brands"){currentBrands=await WheelWiseAPI.adminList("brands","display_order.asc,name.asc");renderBrands();}
+if(name==="videos"){currentVideos=await WheelWiseAPI.adminList("videos","created_at.desc");renderVideos();}
+if(name==="slides"){currentSlides=await WheelWiseAPI.adminList("homepage_slides","display_order.asc,created_at.desc");renderSlides();}
+if(name==="newsletter"){const rows=await WheelWiseAPI.adminList("newsletter_subscribers","created_at.desc");currentSubscribers=rows;$("newsletterRows").replaceChildren(...rows.map(x=>{const tr=document.createElement("tr");tr.append(cell(x.email),cell(x.status),cell(x.created_at?new Date(x.created_at).toLocaleDateString():""));return tr;}));}
+if(name==="messages"){const rows=await WheelWiseAPI.adminList("contact_messages","created_at.desc");$("messagesRows").replaceChildren(...rows.map(x=>{const tr=document.createElement("tr");tr.append(cell(x.name),cell(x.email),cell(x.message),cell(x.created_at?new Date(x.created_at).toLocaleString():""));return tr;}));}}
+function renderArticles(){const body=$("articlesRows");body.replaceChildren();currentArticles.forEach(a=>{const tr=document.createElement("tr");tr.append(cell(a.title),cell(a.category),cell(a.date),cell(a.status));const td=document.createElement("td");rowAction(td,"Edit",()=>editArticle(a));rowAction(td,"Delete",async()=>{if(confirm("Delete this article?")){await WheelWiseAPI.deleteArticle(a.id);say("Article deleted.");loadSection("articles");}},true);tr.append(td);body.append(tr);});}
+function showArticleForm(a={}){$("articleEditor").hidden=false;$('articleFormTitle').textContent=a.id?"Edit article":"New article";$('articleId').value=a.id||"";$('aTitle').value=a.title||"";$('aCategory').value=a.category||"New Launches";$('aBrand').value=a.brand||"";$('aDate').value=a.date||new Date().toISOString().slice(0,10);$('aReadTime').value=a.readTime||"5 min read";$('aImage').value=a.image||"";$('aDescription').value=a.description||"";$('aContent').value=a.contentHtml||"";$('aStatus').value=a.status||"draft";$('aPopular').checked=!!a.popular;$('articleEditor').scrollIntoView({behavior:"smooth"});}
+function editArticle(a){showArticleForm(a);}
+$("newArticle").addEventListener("click",()=>showArticleForm());$("cancelArticle").addEventListener("click",()=>{$("articleEditor").hidden=true;});
+$("uploadFeaturedImage").addEventListener("click",async()=>{const file=$("aImageFile").files[0];if(!file){say("Choose an image first.",true);return;}try{$("aImage").value=await WheelWiseAPI.uploadImage(file);say("Image uploaded. Save the article to keep the URL.");}catch(err){say(err.message,true);}});
+$("articleForm").addEventListener("submit",async e=>{e.preventDefault();try{const id=$('articleId').value;const article={id:id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),title:$('aTitle').value.trim(),category:$('aCategory').value.trim(),brand:$('aBrand').value.trim(),date:$('aDate').value,readTime:$('aReadTime').value.trim(),image:$('aImage').value.trim(),description:$('aDescription').value.trim(),contentHtml:$('aContent').value,status:$('aStatus').value,popular:$('aPopular').checked};await WheelWiseAPI.saveArticle(article,!id);$('articleEditor').hidden=true;say("Article saved successfully.");await loadSection("articles");}catch(err){say(err.message,true);}});
+function renderBrands(){const body=$("brandsRows");body.replaceChildren();currentBrands.forEach(b=>{const tr=document.createElement("tr");tr.append(cell(b.name),cell(b.slug),cell(b.status));const td=document.createElement("td");rowAction(td,"Edit",()=>brandForm(b));rowAction(td,"Delete",async()=>{if(confirm("Delete this brand?")){await WheelWiseAPI.adminDelete("brands",b.id);loadSection("brands");}},true);tr.append(td);body.append(tr);});}
+function slugify(s){return s.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+async function brandForm(b={}){const name=prompt("Brand name",b.name||"");if(name===null||!name.trim())return;const slug=prompt("URL slug",b.slug||slugify(name));if(slug===null)return;const description=prompt("Short description",b.description||"")||"";try{await WheelWiseAPI.adminSave("brands",{...(b.id?{id:b.id}:{}),name:name.trim(),slug:slugify(slug),description,status:"active",display_order:b.display_order||0},!b.id);say("Brand saved.");loadSection("brands");}catch(e){say(e.message,true);}}
+$("addBrand").addEventListener("click",()=>brandForm());
+function youtubeId(url){try{const u=new URL(url);if(u.hostname.includes("youtu.be"))return u.pathname.slice(1).split("/")[0];if(u.hostname.includes("youtube.com"))return u.searchParams.get("v")||u.pathname.split("/embed/")[1]?.split("/")[0]||"";}catch(e){}return "";}
+function renderVideos(){const body=$("videosRows");body.replaceChildren();currentVideos.forEach(v=>{const tr=document.createElement("tr");tr.append(cell(v.title),cell(v.category),cell(v.brand_name||""),cell(v.status));const td=document.createElement("td");rowAction(td,"Edit",()=>videoForm(v));rowAction(td,"Delete",async()=>{if(confirm("Delete this video?")){await WheelWiseAPI.adminDelete("videos",v.id);loadSection("videos");}},true);tr.append(td);body.append(tr);});}
+async function videoForm(v={}){const title=prompt("Video title",v.title||"");if(title===null||!title.trim())return;const url=prompt("YouTube URL",v.youtube_url||"");if(url===null)return;const id=youtubeId(url);if(!id){alert("Please enter a valid YouTube video URL.");return;}const description=prompt("Description",v.description||"")||"";const category=prompt("Category (reviews / comparison / general)",v.category||"reviews")||"reviews";const brand_name=prompt("Brand name (optional)",v.brand_name||"")||"";try{await WheelWiseAPI.adminSave("videos",{...(v.id?{id:v.id}:{}),title:title.trim(),youtube_url:url.trim(),youtube_id:id,description,category,brand_name,status:"published",published_at:new Date().toISOString()},!v.id);say("YouTube video saved.");loadSection("videos");}catch(e){say(e.message,true);}}
+$("addVideo").addEventListener("click",()=>videoForm());
+function renderSlides(){const body=$("slidesRows");body.replaceChildren();currentSlides.forEach(x=>{const tr=document.createElement("tr");tr.append(cell(x.title),cell(x.vehicle_type),cell(x.status));const td=document.createElement("td");rowAction(td,"Edit",()=>slideForm(x));rowAction(td,"Delete",async()=>{if(confirm("Delete slide?")){await WheelWiseAPI.adminDelete("homepage_slides",x.id);loadSection("slides");}},true);tr.append(td);body.append(tr);});}
+async function slideForm(x={}){const title=prompt("Slide title",x.title||"");if(title===null||!title.trim())return;const image_url=prompt("Image URL (https://)",x.image_url||"");if(image_url===null)return;const vehicle_type=prompt("Vehicle type: car or bike",x.vehicle_type||"car")||"car";const link_url=prompt("Optional link URL",x.link_url||"")||"";try{await WheelWiseAPI.adminSave("homepage_slides",{...(x.id?{id:x.id}:{}),title:title.trim(),image_url:image_url.trim(),vehicle_type,link_url,status:"active",display_order:x.display_order||0},!x.id);say("Homepage slide saved.");loadSection("slides");}catch(e){say(e.message,true);}}
+$("addSlide").addEventListener("click",()=>slideForm());
+const exportNewsletter=$("exportNewsletter");if(exportNewsletter)exportNewsletter.addEventListener("click",()=>{const rows=[["email","status","created_at"],...currentSubscribers.map(x=>[x.email,x.status,x.created_at||""])];const csv=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\\r\\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="wheelwise-newsletter-subscribers.csv";a.click();URL.revokeObjectURL(url);});
+document.querySelectorAll(".nav[data-section]").forEach(b=>b.addEventListener("click",()=>switchSection(b.dataset.section)));
+$("logoutButton").addEventListener("click",async()=>{await WheelWiseAPI.signOut();location.replace("login.html");});
+(async()=>{try{await guard();await loadSection("overview");}catch(e){console.warn(e);}})();

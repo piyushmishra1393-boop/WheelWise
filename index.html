@@ -33,6 +33,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <link rel="stylesheet" href="library.css">
+    <link rel="stylesheet" href="theme.css">
 </head>
 
 
@@ -111,7 +112,7 @@
         <!-- Mobile navigation -->
         <div class="mobile-menu" id="mobileMenu">
 
-            <a href="#">Home</a>
+            <a href="index.html">Home</a>
             <a href="brands.html">Cars</a>
             <a href="#news">News</a>
             <a href="reviews.html">Reviews</a>
@@ -381,7 +382,7 @@
                         </p>
                     </div>
 
-                    <a href="#">
+                    <a href="brands.html">
                         View All Brands
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -389,59 +390,9 @@
                 </div>
 
 
-                <!-- Brand cards -->
-                <div class="brands-grid">
-
-                    <div class="brand-card">
-                        <strong>S</strong>
-                        <span>Maruti Suzuki</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>H</strong>
-                        <span>Hyundai</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>T</strong>
-                        <span>Tata</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>M</strong>
-                        <span>Mahindra</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>H</strong>
-                        <span>Honda</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>TOYOTA</strong>
-                        <span>Toyota</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>BMW</strong>
-                        <span>BMW</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>MB</strong>
-                        <span>Mercedes-Benz</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>AUDI</strong>
-                        <span>Audi</span>
-                    </div>
-
-                    <div class="brand-card">
-                        <strong>KIA</strong>
-                        <span>Kia</span>
-                    </div>
-
+                <!-- Original Explore Popular Brands card grid; cards are loaded from active Supabase brands. -->
+                <div class="brands-grid" id="homeBrandGrid">
+                    <p>Loading brands…</p>
                 </div>
 
             </div>
@@ -636,9 +587,7 @@ alt="car comparison">
          ===================================================== -->
 
 
-<section class="section" id="exploreBrands"><div class="container"><div class="section-heading"><p class="eyebrow">EXPLORE THE AUTOMOTIVE WORLD</p><h2>Explore Popular Brands</h2><p>Browse manufacturers and discover their latest stories.</p></div><div id="brandGrid" class="brand-grid"><p>Brands will appear here after the database upgrade.</p></div><p style="text-align:center;margin-top:24px"><a class="primary-button" href="brands.html">View All Brands →</a></p></div></section>
-
-    <footer class="footer">
+<footer class="footer">
 
         <div class="container footer-grid">
 
@@ -674,12 +623,12 @@ alt="car comparison">
 
                 <h3>Quick Links</h3>
 
-                <a href="#">Home</a>
+                <a href="index.html">Home</a>
                 <a href="brands.html">Cars</a>
                 <a href="#news">News</a>
                 <a href="reviews.html">Reviews</a>
                 <a href="compare.html">Compare</a>
-                <a href="#">About Us</a>
+                <a href="about.html">About Us</a>
 
             </div>
 
@@ -689,10 +638,10 @@ alt="car comparison">
 
                 <h3>Resources</h3>
 
-                <a href="#">Contact</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Sitemap</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms &amp; Conditions</a>
+                <a href="index.html">Sitemap</a>
                 <a href="admin/login.html">Admin Login</a>
 
             </div>
@@ -768,6 +717,7 @@ alt="car comparison">
     <script>document.getElementById("homeNewsletterForm")?.addEventListener("submit",async function(e){e.preventDefault();const m=document.getElementById("homeNewsletterMessage");try{await WheelWiseAPI.subscribeNewsletter(document.getElementById("homeNewsletterEmail").value);m.textContent="Thanks for subscribing!";this.reset();}catch(err){m.textContent=err.message;}});</script>
 
 <!-- Admin sign-in is password protected by Supabase Auth. -->
+    <script src="theme.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,12 @@
+/* WheelWise shared dark theme. Theme preference is shared across every page. */
+.ww-theme-toggle{position:fixed;right:18px;bottom:18px;z-index:99999;width:46px;height:46px;border:1px solid #cbd5e1;border-radius:50%;background:#fff;color:#172033;box-shadow:0 4px 18px #0002;cursor:pointer;font-size:20px;display:grid;place-items:center}
+body.dark{background:#101722!important;color:#e7edf5!important;color-scheme:dark}
+body.dark header,body.dark .header,body.dark .lib-head,body.dark .mobile-menu,body.dark nav{background:#172333!important;color:#e7edf5!important}
+body.dark main,body.dark .lib-wrap,body.dark .container,body.dark .section,body.dark .section-heading{color:#e7edf5}
+body.dark h1,body.dark h2,body.dark h3,body.dark h4,body.dark p,body.dark label,body.dark span,body.dark li,body.dark .muted,body.dark .eyebrow{color:inherit}
+body.dark a{color:#8fc5ff}
+body.dark .content-card,body.dark .brand-card,body.dark .news-card,body.dark .mini-card,body.dark .tabs,body.dark .search-box,body.dark .form-card,body.dark .admin-card,body.dark .stat-card,body.dark .dashboard-card,body.dark .editor-container{background:#1b293a!important;color:#e7edf5!important;border-color:#34465c!important}
+body.dark input,body.dark textarea,body.dark select,body.dark button:not(.ww-theme-toggle){background:#182638;color:#e7edf5;border-color:#40536b}
+body.dark footer,body.dark .footer{background:#0b121c!important;color:#dce6f2!important}
+body.dark .footer a{color:#a9d1ff}
+body.dark .ww-theme-toggle{background:#f8fafc;color:#172033}
